@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateInvoiceRequest;
+use App\Models\Invoice;
+use App\Models\Customer;
 
 class CreateInvoiceController extends Controller
 {
@@ -20,6 +22,15 @@ class CreateInvoiceController extends Controller
             ]);
         }
 
-        $usersCount = Customer::usersCount();
+        $invoice = Invoice::create([
+            'started_at' => $request->started_at,
+            'ended_at' => $request->ended_at,
+            'customer_id' => $request->customer_id,
+            'user_count' => $customer->userCount(),
+            'amount_of_events' => $customer->invoiceCount(),
+            'total_price' => $customer->totalOfPrice(),
+        ]);
+
+        return $invoice;
     }
 }

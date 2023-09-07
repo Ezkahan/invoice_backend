@@ -11,8 +11,14 @@ class GetInvoiceController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Invoice $invoice)
+    public function __invoke(Request $request, Invoice $invoice)
     {
-        return InvoiceResource::make($invoice);
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $data = Invoice::whereDateBetween('started_at', $start_date, 'ended_at', $end_date)->get();
+
+        // this is not completed task (  sorry
+        return InvoiceResource::make($data);
     }
 }

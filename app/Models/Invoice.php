@@ -10,10 +10,10 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'appointment', 'activated'];
+    protected $fillable = ['customer_id', 'user_count', 'amount_of_events', 'total_price', 'started_at', 'ended_at'];
 
-    public function user(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 }
